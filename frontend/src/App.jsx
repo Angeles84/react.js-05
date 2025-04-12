@@ -11,11 +11,13 @@ import Register from './assets/pages/Register';
 import Login from './assets/pages/Login';
 import Profile from "./assets/pages/Profile";
 import NotFound from "./assets/pages/NotFound";
+import CartProvider from "./assets/context/CartContext";
 
 function App() {
 
   return (
     <>
+      <CartProvider>
       <NavBar/>
 
       <Routes>
@@ -52,9 +54,15 @@ function App() {
         <Route
           path="*"
           element={<NotFound/>}
-        />
+          >
+        </Route>
+        <Route
+          path="/404"
+          element={<NotFound/>}
+        >
+        </Route>
       </Routes>
-
+      </CartProvider>
       <Footer/>
     </>
   )

@@ -1,35 +1,10 @@
-import { useState } from 'react';
-import pizzasCart from '../components/pizzasCart.js'
+import { useContext } from 'react';
+//import pizzasCart from '../components/pizzasCart.js'
+import { CartContext } from '../context/CartContext.jsx';
+
 
 const Cart = () => {
-  const [cart, setCart] = useState(pizzasCart);
-
-  const totalPrice = cart.reduce(
-    (total, pizza) => total + pizza.price * pizza.count,
-    0
-  );
-
-  const eliminarPizza = (pizza) => {
-    const listaFiltrada = cart.filter(el => el.name !== pizza.name)
-    setCart(listaFiltrada)
-  }
-
-  const disminuirtCount = (pizza) => {
-    const nuevoCart = [...cart] 
-    const index = nuevoCart.findIndex(el => el.name === pizza.name)
-    if(nuevoCart[index].count >= 2 ) {
-      nuevoCart[index].count = nuevoCart[index].count - 1
-      setCart(nuevoCart)
-    } else if (nuevoCart[index].count <= 1)
-      eliminarPizza(pizza)
-  }
-
-  const aumentarCount = (pizza) => {
-    const nuevoCart = [...cart] 
-    const index = nuevoCart.findIndex(el => el.name === pizza.name)
-    nuevoCart[index].count = nuevoCart[index].count + 1
-    setCart(nuevoCart)
-  }
+  const { cart, totalPrice, disminuirtCount, aumentarCount } = useContext(CartContext);
 
   return ( 
     <>
@@ -37,8 +12,9 @@ const Cart = () => {
         <h1 className='mb-3'>Detalles del pedido:</h1>
         <ul className="list-group mb-4">
           {
-            cart.map((pizza, index) => (
-              <li key={index} className="list-group-item">
+            cart.length >= 1 ? 
+            cart.map(pizza => (
+              <li key={pizza.name} className="list-group-item">
                 <div className='row'>
                   <div className='col-6 col-md-4'>
                     <img src={pizza.img} alt="pizza 1" className='w-50 img-fluid'/>
@@ -54,13 +30,15 @@ const Cart = () => {
                   </div>
                 </div>
               </li>
-            ))
+            )) :
+            <li className="list-group-item py-4">El carrito se encuentra vacío</li>
           }
         </ul>
         
-        <span className='fs-5 me-2'><b>Total: ${totalPrice.toLocaleString('es-CL')}</b></span> <br />
+        <span className='fs-5 me-2'><b>Total: ${totalPrice}</b></span> <br />
         <button className='btn btn-dark mt-3 px-5'>Pagar</button>
       </div>
+   
     </>
    );
 }

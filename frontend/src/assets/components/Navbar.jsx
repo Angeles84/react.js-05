@@ -3,10 +3,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
+import { CartContext } from '../context/CartContext.jsx';
+import { useContext } from 'react';
 
 const NavBar = () => {
-  const total = 25000;
+  //const total = 25000;
   const token = false;
+  const { totalPrice } = useContext(CartContext);
 
   return ( 
     <>
@@ -54,7 +57,7 @@ const NavBar = () => {
                 variant="outline-info" 
                 to="/cart"
               >
-                🛒Total: ${total.toLocaleString('es-CL')}
+                🛒Total:  ${ totalPrice }
               </Link>
             </Nav>
           </Navbar.Collapse>
