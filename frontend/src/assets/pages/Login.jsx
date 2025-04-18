@@ -33,7 +33,7 @@ const Login = () => {
         { errorVacio === false && errorPassworMoreSix === false ? <p className="text-success">Los datos han sido enviados correctamente!</p> : null }
         <Form onSubmit={validarInput}>
           <Form.Group className="mb-3" controlId="inputEmail">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email (*)</Form.Label>
             <Form.Control 
               type="email" 
               placeholder="name@example.com" 
@@ -43,7 +43,7 @@ const Login = () => {
               />   
           </Form.Group>
           <Form.Group className="mb-3" controlId="inputPassword">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña (*)</Form.Label>
             <Form.Control 
               type="password" 
               placeholder="******" 

@@ -1,14 +1,19 @@
 import { useState, useEffect} from 'react'
+import { useParams } from "react-router-dom";
+import { useContext } from 'react';
+import { CartContext } from "../context/CartContext";
 
 const Pizza = () => {
 
   const [pizza, setPizza] = useState([])
+  const { id } = useParams();
+  const { addToCart } = useContext(CartContext)
+
+  const url = `http://localhost:5000/api/pizzas/${id}`;
 
   useEffect(() => {
     getData()
-  }, []);
-
-  const url = 'http://localhost:5000/api/pizzas/p001';
+  }, [url]);
 
   const getData = async () => {   
     const response = await fetch(url);
@@ -25,10 +30,10 @@ const Pizza = () => {
               <h5 className="card-title">🍕 {pizza.name}</h5>
               <p className="card-text">{pizza.desc}</p>
               <hr />
-              <p>{pizza.ingredients.join(', ')}</p>
+              <p>{ pizza.ingredients && pizza.ingredients.join(', ')}</p>
               <hr />
-              <h3 className='mb-4'>$ {pizza.price.toLocaleString('es-CL')}</h3>
-              <button className='btn btn-primary'>Añadir al carrito</button>
+              <h3 className='mb-4'>$ {pizza.price && pizza.price.toLocaleString('es-CL')}</h3>
+              <button className='btn btn-dark' onClick={() => addToCart(pizza)}>Añadir al carrito 🛒</button>
             </div>                   
           </div>
         </div>

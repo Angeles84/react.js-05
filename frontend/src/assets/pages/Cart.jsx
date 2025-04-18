@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 //import pizzasCart from '../components/pizzasCart.js'
 import { CartContext } from '../context/CartContext.jsx';
-
+import { UserContext } from '../context/UserContext.jsx';
 
 const Cart = () => {
   const { cart, totalPrice, disminuirtCount, aumentarCount } = useContext(CartContext);
+  const { token } = useContext(UserContext);
 
   return ( 
     <>
@@ -23,7 +24,7 @@ const Cart = () => {
                     <span className='ms-3 fs-5'>{pizza.name}</span>
                   </div>
                   <div className='col-12 col-md-4 d-flex align-items-center mt-3 mt-md-0'>
-                    <span className='fs-5 me-3'><b>${pizza.price * pizza.count}</b></span>
+                    <span className='fs-5 me-3'><b>${(pizza.price * pizza.count).toLocaleString('es-CL')}</b></span>
                     <button className='btn btn-outline-danger me-2' onClick={() => disminuirtCount(pizza)}>-</button>
                     <span className='fs-5 me-2'><b>{pizza.count}</b></span>
                     <button className='btn btn-outline-success' onClick={() => aumentarCount(pizza)}>+</button>
@@ -35,8 +36,8 @@ const Cart = () => {
           }
         </ul>
         
-        <span className='fs-5 me-2'><b>Total: ${totalPrice}</b></span> <br />
-        <button className='btn btn-dark mt-3 px-5'>Pagar</button>
+        <span className='fs-5 me-2'><b>Total: ${totalPrice && totalPrice.toLocaleString('es-CL')}</b></span> <br />
+        {token && <button className='btn btn-dark mt-3 px-5'>Pagar</button>}
       </div>
    
     </>

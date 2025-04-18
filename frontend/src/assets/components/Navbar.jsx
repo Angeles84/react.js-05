@@ -2,14 +2,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { CartContext } from '../context/CartContext.jsx';
+import { UserContext } from '../context/UserContext.jsx';
 import { useContext } from 'react';
 
 const NavBar = () => {
-  //const total = 25000;
-  const token = false;
+
   const { totalPrice } = useContext(CartContext);
+  const { token, logout } = useContext(UserContext);
+
+  const setActiveClass = ({ isActive }) => (isActive ? "btn btn-outline-secondary mb-3 me-lg-3 mb-lg-0" : "btn btn-outline-light mb-3 me-lg-3 mb-lg-0");
 
   return ( 
     <>
@@ -19,46 +22,46 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-light'/>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto py-3 py-lg-1">
-            <Link
+            <NavLink
               to="/"
-              className="btn btn-outline-light me-lg-3 mb-2 mb-lg-0"
+              className={ setActiveClass }
               >
-              Home
-            </Link>
+              🏠 Home
+            </NavLink>
               {token ? 
                 <>
-                  <Link 
-                    className='btn btn-outline-light me-lg-3 mb-2 mb-lg-0' 
+                  <NavLink 
+                    className={ setActiveClass }
                     to="/profile"
                   >
-                    👩Profile
-                  </Link>
-                  <Button className='me-lg-2 mb-2 mb-lg-0' variant="outline-secondary" href="#pricing">🚪Logout</Button>
+                    👩 Profile
+                  </NavLink>
+                  <Button className='me-lg-2 mb-2 mb-lg-0' variant="outline-warning" onClick={() => logout()} >🚪Logout</Button>
                 </> : 
                 <>
-                  <Link 
-                    className='btn btn-outline-light me-lg-3 mb-2 mb-lg-0' 
+                  <NavLink 
+                    className={ setActiveClass }
                     variant="outline-secondary" 
                     to="/login"
                   >
-                    🔐Login
-                  </Link>
-                  <Link 
-                    className='btn btn-outline-light me-lg-5 mb-2 mb-lg-0' 
+                    🔐 Login
+                  </NavLink>
+                  <NavLink 
+                    className={ setActiveClass }
                     variant="outline-secondary"
                     to="/register"
                     >
-                      🔐Register
-                  </Link>
+                      🔐 Register
+                  </NavLink>
                 </>
               }
-              <Link 
+              <NavLink 
                 className='btn btn-outline-info ms-lg-5'
                 variant="outline-info" 
                 to="/cart"
               >
-                🛒Total:  ${ totalPrice }
-              </Link>
+                🛒 Total:  ${ totalPrice && totalPrice.toLocaleString('es-CL')}
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>

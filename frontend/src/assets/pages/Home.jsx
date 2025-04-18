@@ -1,5 +1,6 @@
 import CardPizza from "../components/CardPizza";
 import Header from "../components/Header";
+import './pages.css'
 //import pizzas from '../components/pizzas.js'
 
 import { useState, useEffect} from 'react'
@@ -33,6 +34,7 @@ const Home = () => {
                   price={pizza.price}
                   ingredients={pizza.ingredients}
                   desc={pizza.desc}
+                  id={pizza.id}
                 />
               </div>
             ))

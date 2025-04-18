@@ -2,8 +2,11 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useContext } from 'react';
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
+
 
 const CardPizza = ({name, price, ingredients, img, desc, id}) => {
+
   const { addToCart } = useContext(CartContext)
   const pizza = { name, ingredients, price, img, id };
 
@@ -26,8 +29,8 @@ const CardPizza = ({name, price, ingredients, img, desc, id}) => {
           <hr />
           <h5 className='text-center mb-3'>Precio: ${price.toLocaleString('es-CL')}</h5>
           <div className='d-flex justify-content-between'>
-            <Button variant='outline-secondary'>Ver más 👀</Button> 
-            <Button variant="dark"onClick={() => addToCart(pizza)}>Añadir 🛒</Button>
+            <Link to={`/pizza/${id}`}><Button variant='outline-secondary' >Ver más 👀</Button></Link>
+            <Button variant="dark" onClick={() => addToCart(pizza)}>Añadir 🛒</Button>
           </div>
        </Card.Body>
       </Card>

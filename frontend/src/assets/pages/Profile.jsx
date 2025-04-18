@@ -9,7 +9,6 @@ const Profile = () => {
         
         <h6 className="mt-5">juanitoperez@gmail.com</h6>
 
-        <Button className='me-lg-2 mt-5 mb-lg-0' variant="outline-secondary" >🚪Logout</Button>
       </Container> 
     </>
    );
