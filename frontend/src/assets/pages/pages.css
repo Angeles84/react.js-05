@@ -3,3 +3,7 @@
   border-color: lightslategray;
   color: lightslategray;
 }
+
+.ancho-img{
+  max-width: 550px;
+}

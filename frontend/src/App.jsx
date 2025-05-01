@@ -17,7 +17,7 @@ import { useContext } from 'react';
 
 function App() {
 
-  const { token } = useContext(UserContext);
+  const { isLogged } = useContext(UserContext);
 
   return (
     <>
@@ -31,12 +31,12 @@ function App() {
           />
           <Route
             path="/login"
-            element={token ? <Navigate to="/"/> : <Login/> }
+            element={isLogged ? <Navigate to="/"/> : <Login/> }
           >
           </Route>
           <Route
             path="/register"
-            element={token ? <Navigate to="/" /> : <Register />}
+            element={isLogged ? <Navigate to="/" /> : <Register />}
           >
           </Route>
           <Route
@@ -52,7 +52,7 @@ function App() {
           
           <Route
             path="/profile"
-            element={token ? <Profile /> : <Navigate to="/login" />}
+            element={isLogged ? <Profile /> : <Navigate to="/login" />}
           >
           </Route>
           <Route

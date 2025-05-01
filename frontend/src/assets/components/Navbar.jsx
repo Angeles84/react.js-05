@@ -2,15 +2,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CartContext } from '../context/CartContext.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import { useContext } from 'react';
 
 const NavBar = () => {
 
-  const { totalPrice } = useContext(CartContext);
-  const { token, logout } = useContext(UserContext);
+  const { totalPrice, getQuantity } = useContext(CartContext);
+  const { logout, isLogged } = useContext(UserContext);
 
   const setActiveClass = ({ isActive }) => (isActive ? "btn btn-outline-secondary mb-3 me-lg-3 mb-lg-0" : "btn btn-outline-light mb-3 me-lg-3 mb-lg-0");
 
@@ -28,7 +28,7 @@ const NavBar = () => {
               >
               🏠 Home
             </NavLink>
-              {token ? 
+              {isLogged ? 
                 <>
                   <NavLink 
                     className={ setActiveClass }
@@ -36,7 +36,7 @@ const NavBar = () => {
                   >
                     👩 Profile
                   </NavLink>
-                  <Button className='me-lg-2 mb-2 mb-lg-0' variant="outline-warning" onClick={() => logout()} >🚪Logout</Button>
+                  <Link to="/"><Button className='me-lg-2 mb-2 mb-lg-0' variant="outline-warning" onClick={() => logout()} >🚪Logout</Button></Link>
                 </> : 
                 <>
                   <NavLink 
@@ -60,7 +60,7 @@ const NavBar = () => {
                 variant="outline-info" 
                 to="/cart"
               >
-                🛒 Total:  ${ totalPrice && totalPrice.toLocaleString('es-CL')}
+                🛒 Total:  ${ totalPrice && totalPrice.toLocaleString('es-CL')} <sup>{ getQuantity() }</sup>
               </NavLink>
             </Nav>
           </Navbar.Collapse>

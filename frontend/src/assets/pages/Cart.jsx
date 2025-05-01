@@ -2,14 +2,21 @@ import { useContext } from 'react';
 //import pizzasCart from '../components/pizzasCart.js'
 import { CartContext } from '../context/CartContext.jsx';
 import { UserContext } from '../context/UserContext.jsx';
+import pagado from '../img/pago-exitoso.gif'
+import './pages.css' 
 
 const Cart = () => {
-  const { cart, totalPrice, disminuirtCount, aumentarCount } = useContext(CartContext);
-  const { token } = useContext(UserContext);
+  const { cart, totalPrice, disminuirtCount, aumentarCount, cartCheckout, checkoutSuccess} = useContext(CartContext);
+  const { isLogged } = useContext(UserContext);
+
+
+  const pagarCarrito = async () => {
+    await cartCheckout();
+  }
 
   return ( 
     <>
-      <div className="container mt-5 pt-5">
+      <div className="container my-5 py-5">
         <h1 className='mb-3'>Detalles del pedido:</h1>
         <ul className="list-group mb-4">
           {
@@ -37,9 +44,11 @@ const Cart = () => {
         </ul>
         
         <span className='fs-5 me-2'><b>Total: ${totalPrice && totalPrice.toLocaleString('es-CL')}</b></span> <br />
-        {token && <button className='btn btn-dark mt-3 px-5'>Pagar</button>}
+        <button className={ isLogged && cart.length > 0 ? 'btn btn-dark mt-3 px-5' : 'btn btn-dark mt-3 px-5 disabled'} onClick={() => pagarCarrito()}>Pagar</button>
+        
+        {checkoutSuccess && <div className='text-center'><img src={pagado} alt="" className="img-fluid ancho-img"/></div>}
+
       </div>
-   
     </>
    );
 }

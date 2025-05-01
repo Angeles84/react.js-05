@@ -5,7 +5,7 @@ import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 
-const CardPizza = ({name, price, ingredients, img, desc, id}) => {
+const CardPizza = ({name, price, ingredients, img, id}) => {
 
   const { addToCart } = useContext(CartContext)
   const pizza = { name, ingredients, price, img, id };
@@ -25,7 +25,6 @@ const CardPizza = ({name, price, ingredients, img, desc, id}) => {
               ))
             }
           </ul>
-          <Card.Text>{desc}</Card.Text>
           <hr />
           <h5 className='text-center mb-3'>Precio: ${price.toLocaleString('es-CL')}</h5>
           <div className='d-flex justify-content-between'>

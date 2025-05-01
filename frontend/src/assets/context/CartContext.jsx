@@ -1,10 +1,12 @@
-import { createContext, useState } from "react";
-//import pizzasCart from '../components/pizzasCart.js'
+import { createContext, useContext, useState } from "react";
+import { UserContext } from "./UserContext";
 
 export const CartContext = createContext();
 
 const CartProvider  = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(null);
+  const {token} = useContext(UserContext)
 
   const totalPrice = cart.reduce(
     (total, pizza) => total + pizza.price * pizza.count,
@@ -47,8 +49,32 @@ const CartProvider  = ({ children }) => {
 
   const getQuantity = () => cart.reduce((total, pizza) => total + pizza.count, 0);
 
+  const cartCheckout = async () => {
+    const response = await fetch("http://localhost:5000/api/checkouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        cart: cart,
+      }),
+    });
+    
+    let data = await response.json();
+    console.log('dataCart', data);
+    if (data.message == 'Checkout successful') {
+      setCart([]);
+      setCheckoutSuccess(true);
+      //alert('Pago exitoso!!')   
+    } else {
+      setCheckoutSuccess(false);
+      alert(data?.error || data.message);
+    }
+  };
+
   return ( 
-    <CartContext.Provider value={{cart, totalPrice, disminuirtCount, aumentarCount, getQuantity, addToCart }}>
+    <CartContext.Provider value={{cart, totalPrice, disminuirtCount, aumentarCount, getQuantity, addToCart, cartCheckout, checkoutSuccess}}>
       {children}
     </CartContext.Provider>
    );

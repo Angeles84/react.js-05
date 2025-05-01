@@ -22,21 +22,28 @@ const Pizza = () => {
   }
   return ( 
     <div className='mt-5 pt-5 container'>
-      <div className='row'>
-        <div className='col-12 col-md-4'>
-          <div className="card" >
-            <img src={pizza.img} className="card-img-top img-fluid" alt="foto pizza"/>
-            <div className="card-body">
-              <h5 className="card-title">🍕 {pizza.name}</h5>
-              <p className="card-text">{pizza.desc}</p>
-              <hr />
-              <p>{ pizza.ingredients && pizza.ingredients.join(', ')}</p>
-              <hr />
-              <h3 className='mb-4'>$ {pizza.price && pizza.price.toLocaleString('es-CL')}</h3>
-              <button className='btn btn-dark' onClick={() => addToCart(pizza)}>Añadir al carrito 🛒</button>
-            </div>                   
+      <div className='row pt-3'>
+
+        <div className="card mb-3 py-3">
+            <div className="row g-0">
+              <div className="col-md-4">
+                <img src={pizza.img} className="img-fluid" alt="..."/>
+              </div>
+              <div className="col-md-8">
+                <div className="card-body py-0">
+                  <h5 className="card-title mt-3 mt-md-0">🍕 {pizza.name}</h5>
+                  <p className="card-text">{pizza.desc}</p>
+                  <hr />
+                  <p><b>Ingredientes: </b>{ pizza.ingredients && pizza.ingredients.join(', ')}</p>
+                  <hr />
+                  <div className='d-flex justify-content-between'>
+                    <h3 className='mb-0'>$ {pizza.price && pizza.price.toLocaleString('es-CL')}</h3>
+                    <button className='btn btn-dark' onClick={() => addToCart(pizza)}>Añadir al carrito 🛒</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

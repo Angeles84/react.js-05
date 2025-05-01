@@ -23,7 +23,7 @@ const Home = () => {
   return ( 
     <>
       <Header/>
-      <div className="container mt-5">
+      <div className="container my-5 pb-5">
         <div className="row">
           {
             pizzas.map(pizza => (
